@@ -1,0 +1,24 @@
+title:  Learning About Machines
+# tagline:  a minimalist Jekyll theme
+author:
+  name: 'Will Whitney'
+  twitter:  wfwhitney
+
+# Change to true for Disqus comments
+disqus:
+  comments: false
+  disqus_shortname: 'https-lenpaul-github-io-lagrange'
+
+google-ID: 'UA-104146434-1'
+
+menu:
+- {name: 'About', url: 'about.html'}
+- {name: 'Writing', url: 'writing.html'}
+# - {name: 'Contact', url: 'contact.html'}
+
+social:
+- {icon: 'github', link: 'https://www.github.com/willwhitney'}
+- {icon: 'twitter', link: 'https://twitter.com/wfwhitney'}
+- {icon: 'envelope', link: 'mailto:wfwhitney@gmail.com'}
+
+# Available social icons are powered by Font Awesome, so you can use any icon that they offer
