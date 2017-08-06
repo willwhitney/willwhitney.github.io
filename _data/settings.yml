@@ -20,5 +20,6 @@ social:
 - {icon: 'github', link: 'https://www.github.com/willwhitney'}
 - {icon: 'twitter', link: 'https://twitter.com/wfwhitney'}
 - {icon: 'envelope', link: 'mailto:wfwhitney@gmail.com'}
+- {icon: 'rss', link: '/feed.xml'}
 
 # Available social icons are powered by Font Awesome, so you can use any icon that they offer
