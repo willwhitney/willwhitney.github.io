@@ -31,6 +31,6 @@ William F. Whitney. [Disentangled Representations in Neural Models](assets/paper
 
 
 Tejas D. Kulkarni[^1], William F. Whitney[^1], Pushmeet Kohli, and Joshua B. Tenenbaum. [Deep convolutional inverse graphics network](assets/papers/Deep.Convolutional.Inverse.Graphics.Network.pdf). In _Advances in Neural Information Processing Systems_, pages 2539–2547, 2015.
-_Spotlight presentation given by William Whitney._
+**Spotlight presentation given by William Whitney.**
 
 [^1]: Equal contribution.
