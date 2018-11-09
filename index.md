@@ -19,7 +19,7 @@ William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of 
 
 William F. Whitney and Rob Fergus. [Disentangling video with independent prediction](assets/papers/Disentangling.video.with.independent.prediction.pdf). In _Learning Disentangled Representations: from Perception to Control_ at NIPS'17. 2017.
 
-Mikael Henaff, William F. Whitney, and Yann LeCun. [Model-based planning in discrete action spaces](assets/papers/Model.Based.Planning.with.Discrete.and.Continuous.Actions.pdf). _arXiv preprint arXiv:1705.07177_, 2017.
+Mikael Henaff, William F. Whitney, and Yann LeCun. [Model-Based Planning with Discrete and Continuous Actions](assets/papers/Model.Based.Planning.with.Discrete.and.Continuous.Actions.pdf). _arXiv preprint arXiv:1705.07177_, 2017.
 
 Vlad Firoiu, William F. Whitney, and Joshua B. Tenenbaum. [Beating the world’s best at Super Smash Bros. with deep reinforcement learning](assets/papers/Beating.the.Worlds.Best.pdf). _arXiv preprint arXiv:1702.06230_, 2017.
 
