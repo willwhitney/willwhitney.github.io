@@ -1,5 +1,4 @@
-title:  Learning About Machines
-tagline:  shallow thoughts and deep learning
+title:  Will Whitney
 author:
   name: 'Will Whitney'
   twitter:  wfwhitney
@@ -12,8 +11,8 @@ disqus:
 google-ID: 'UA-104146434-1'
 
 menu:
-- {name: 'About', url: 'about.html'}
-- {name: 'Writing', url: 'writing.html'}
+# - {name: 'About', url: 'about.html'}
+# - {name: 'Writing', url: 'writing.html'}
 # - {name: 'Contact', url: 'contact.html'}
 
 social:

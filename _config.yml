@@ -13,3 +13,5 @@ gems:
 kramdown:
    input: GFM
    hard_wrap: false
+   encoding: utf-8
+   footnote_backlink:
