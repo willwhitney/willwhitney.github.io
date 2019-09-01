@@ -5,17 +5,19 @@ title: About Me
 
 ![me in lab](assets/img/in_lab.jpg)
 
-I'm Will Whitney, a PhD student working with Rob Fergus at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator.
+I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator.
 
 ## Research interests
-Currently I'm working on learned models for continuous (robotic) control. Previously I worked on generative models with interpretable latent spaces.
+Currently I'm working on continuous (robotic) control. Previously I worked on generative models with interpretable latent spaces.
 
 My interests include hierarchical reinforcement learning, structured latent spaces, and robotics. I am particularly interested in building agents that understand the world around them, including such concepts as object permanence, locality, and causation.
 
 
 ## Publications
 
-William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of Model-Based RL Methods](assets/papers/Understanding.the.Asymptotic.Performance.of.MBRL.pdf). In review. 2018.
+William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In review. 2019.
+
+William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of Model-Based RL Methods](assets/papers/Understanding.the.Asymptotic.Performance.of.MBRL.pdf). 2018.
 
 William F. Whitney and Rob Fergus. [Disentangling video with independent prediction](assets/papers/Disentangling.video.with.independent.prediction.pdf). In _Learning Disentangled Representations: from Perception to Control_ at NIPS'17. 2017.
 
@@ -28,6 +30,6 @@ William F. Whitney. [Disentangled Representations in Neural Models](assets/paper
 William F. Whitney, Michael Chang, Tejas Kulkarni, and Joshua B. Tenenbaum. [Understanding visual concepts with continuation learning](assets/papers/Understanding.Visual.Concepts.with.Continuation.Learning.pdf). In _International Conference on Learning Representations, Workshop Track_, 2016.
 
 Tejas D. Kulkarni[^1], William F. Whitney[^1], Pushmeet Kohli, and Joshua B. Tenenbaum. [Deep convolutional inverse graphics network](assets/papers/Deep.Convolutional.Inverse.Graphics.Network.pdf). In _Advances in Neural Information Processing Systems_, pages 2539–2547, 2015.
-**Spotlight presentation given by William Whitney.**
+Spotlight presentation given by William Whitney.
 
 [^1]: Equal contribution.
