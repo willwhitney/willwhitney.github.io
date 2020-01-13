@@ -19,7 +19,7 @@ William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-a
 
 William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of Model-Based RL Methods](assets/papers/Understanding.the.Asymptotic.Performance.of.MBRL.pdf). 2018.
 
-William F. Whitney and Rob Fergus. [Disentangling video with independent prediction](assets/papers/Disentangling.video.with.independent.prediction.pdf). In _Learning Disentangled Representations: from Perception to Control_ at NIPS'17. 2017.
+William F. Whitney and Rob Fergus. [Disentangling video with independent prediction](assets/papers/Disentangling.video.with.independent.prediction.pdf). In _Learning Disentangled Representations: from Perception to Control_ at NeurIPS'17. 2017.
 
 Mikael Henaff, William F. Whitney, and Yann LeCun. [Model-Based Planning with Discrete and Continuous Actions](assets/papers/Model.Based.Planning.with.Discrete.and.Continuous.Actions.pdf). _arXiv preprint arXiv:1705.07177_, 2017.
 
@@ -29,7 +29,7 @@ William F. Whitney. [Disentangled Representations in Neural Models](assets/paper
 
 William F. Whitney, Michael Chang, Tejas Kulkarni, and Joshua B. Tenenbaum. [Understanding visual concepts with continuation learning](assets/papers/Understanding.Visual.Concepts.with.Continuation.Learning.pdf). In _International Conference on Learning Representations, Workshop Track_, 2016.
 
-Tejas D. Kulkarni[^1], William F. Whitney[^1], Pushmeet Kohli, and Joshua B. Tenenbaum. [Deep convolutional inverse graphics network](assets/papers/Deep.Convolutional.Inverse.Graphics.Network.pdf). In _Advances in Neural Information Processing Systems_, pages 2539–2547, 2015.
+Tejas D. Kulkarni[^1], William F. Whitney[^1], Pushmeet Kohli, and Joshua B. Tenenbaum. [Deep convolutional inverse graphics network](assets/papers/Deep.Convolutional.Inverse.Graphics.Network.pdf). In _Advances in Neural Information Processing Systems_, 2015.
 Spotlight presentation given by William Whitney.
 
 [^1]: Equal contribution.
