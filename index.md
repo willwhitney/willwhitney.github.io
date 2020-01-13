@@ -8,14 +8,14 @@ title: About Me
 I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator.
 
 ## Research interests
-Currently I'm working on continuous (robotic) control. Previously I worked on generative models with interpretable latent spaces.
+Currently I'm working on reinforcement learning for continuous control and representation learning. Previously I worked on generative models with interpretable latent spaces.
 
 My interests include hierarchical reinforcement learning, structured latent spaces, and robotics. I am particularly interested in building agents that understand the world around them, including such concepts as object permanence, locality, and causation.
 
 
 ## Publications
 
-William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In review. 2019.
+William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In _International Conference on Learning Representations_, 2020.
 
 William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of Model-Based RL Methods](assets/papers/Understanding.the.Asymptotic.Performance.of.MBRL.pdf). 2018.
 
