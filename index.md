@@ -5,7 +5,7 @@ title: About Me
 
 ![me in lab](assets/img/in_lab.jpg)
 
-I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator.
+I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I'm also the creator of [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which has been downloaded >1,500,000 times.
 
 ## Research interests
 Currently I'm working on reinforcement learning for continuous control and representation learning. Previously I worked on generative models with interpretable latent spaces.
