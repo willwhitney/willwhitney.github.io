@@ -17,6 +17,8 @@ My interests include hierarchical reinforcement learning, structured latent spac
 
 William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In _International Conference on Learning Representations_, 2020.
 
+William F. Whitney and Abhinav Gupta. [Learning Effect-Dependent Embeddings for Temporal Abstraction](http://willwhitney.com/assets/papers/Learning.Effect.Dependent.Embeddings.pdf). In _Structure \& Priors in Reinforcement Learning_ at ICLR 2019.
+
 William F. Whitney and Rob Fergus. [Understanding the Asymptotic Performance of Model-Based RL Methods](assets/papers/Understanding.the.Asymptotic.Performance.of.MBRL.pdf). 2018.
 
 William F. Whitney and Rob Fergus. [Disentangling video with independent prediction](assets/papers/Disentangling.video.with.independent.prediction.pdf). In _Learning Disentangled Representations: from Perception to Control_ at NeurIPS'17. 2017.
