@@ -15,6 +15,8 @@ My interests include hierarchical reinforcement learning, structured latent spac
 
 ## Publications
 
+William F. Whitney, Min Jae Song, David Brandfonbrener, Jaan Altosaar, and Kyunghyun Cho. [Evaluating representations by the complexity of learning low-loss predictors](assets/papers/Evaluating.representations.by.the.complexity.of.learning.low.loss.predictors.pdf). In submission.
+
 William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In _International Conference on Learning Representations_, 2020.
 
 William F. Whitney and Abhinav Gupta. [Learning Effect-Dependent Embeddings for Temporal Abstraction](http://willwhitney.com/assets/papers/Learning.Effect.Dependent.Embeddings.pdf). In _Structure & Priors in Reinforcement Learning_ at ICLR 2019.
