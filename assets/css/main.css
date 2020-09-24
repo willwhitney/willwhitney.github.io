@@ -3,10 +3,18 @@
 */
 
 body {
-  font-family: "PT Serif", Georgia, "Times New Roman", serif;
+  /* font-family: "IBM Plex Serif";
+  font-family: "Merriweather"; */
+  /* font-family: "Source Serif Pro"; */
+  font-family: "Source Serif Variable";
+  /* , "PT Serif", Georgia, "Times New Roman", serif; */
+  font-variation-settings: "wght" 450;
   font-size: 18px;
-  color: #515151;
-  line-height: 1.75rem;
+  color: #333;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  -webkit-font-kerning: normal;
 }
 
 @media (max-width: 30em) {
@@ -29,7 +37,7 @@ h1 a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Quattrocento Sans", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #333;
 }
 
@@ -49,10 +57,15 @@ img {
   border-radius: 5px;
 }
 
+p {
+  text-align: justify;
+  word-wrap: break-word;
+}
+
 blockquote {
   border-left: 0.25rem solid #ccc;
   margin: 1.5em 10px;
-  color: #999;
+  color: #515151;
   padding: 0.5em 10px;
   quotes: "\201C""\201D""\2018""\2019";
 }
@@ -66,6 +79,20 @@ blockquote:before {
 }
 blockquote p {
   display: inline;
+}
+
+figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+figcaption {
+  font-style: italic;
+  font-variation-settings: "wght" 500;
+}
+
+a.footnote {
+  margin-left: 2px;
 }
 
 /*
@@ -100,17 +127,18 @@ blockquote p {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   margin-bottom: 4rem;
-  font-family: "Quattrocento Sans", sans-serif;
+  /* font-family: 'Source Sans Pro', sans-serif; */
 }
 
-.masthead a:hover {
+/* .masthead a:hover {
   color:black;
-}
+} */
 
 .masthead-title a {
-  font-size: 2rem;
+  font-size: 3rem;
   text-decoration: none;
-  color: #505050;
+  /* color: #505050; */
+  color: #333;
 }
 
 .masthead-subtitle {
@@ -136,7 +164,7 @@ blockquote p {
   margin-top:3px;
   margin-bottom: 1rem;
   color: #9a9a9a;
-  font-family: 'Quattrocento Sans', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-size:0.8rem;
 }
 
@@ -165,7 +193,7 @@ blockquote p {
 
 .pagination {
   overflow: hidden;
-  font-family: 'Quattrocento Sans', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   text-align: center;
 }
 
@@ -225,8 +253,13 @@ blockquote p {
 
 .menu-content a {
   color: #999;
-  font-size: 1rem;
+  font-size: 1.5rem;
   padding-right: 10px;
+}
+
+.menu-content .active {
+  color: #333399;
+  font-weight: bold;
 }
 
 .social-icons {
@@ -287,6 +320,15 @@ pre {
   white-space: pre;
   overflow-x: auto;
   word-wrap: normal;
+}
+
+
+/*
+  Embeds
+*/
+
+.twitter-tweet {
+  margin: 0 auto;
 }
 
 

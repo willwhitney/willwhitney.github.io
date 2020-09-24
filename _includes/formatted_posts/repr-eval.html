@@ -1,0 +1,322 @@
+<h1>Representation quality and the complexity of learning</h1>
+
+<p>In the last few years, there's been an explosion of work on learning good representations of data.
+    From NLP<sup><a href="#fn1-28786" id="fnr1-28786" title="see footnote" class="footnote">1</a></sup><sup><a
+            href="#fn2-28786" id="fnr2-28786" title="see footnote" class="footnote">2</a></sup><sup><a
+            href="#fn3-28786" id="fnr3-28786" title="see footnote" class="footnote">3</a></sup> to computer
+    vision<sup><a href="#fn4-28786" id="fnr4-28786" title="see footnote" class="footnote">4</a></sup><sup><a
+            href="#fn5-28786" id="fnr5-28786" title="see footnote" class="footnote">5</a></sup><sup><a
+            href="#fn6-28786" id="fnr6-28786" title="see footnote" class="footnote">6</a></sup> to reinforcement
+    learning<sup><a href="#fn7-28786" id="fnr7-28786" title="see footnote" class="footnote">7</a></sup><sup><a
+            href="#fn8-28786" id="fnr8-28786" title="see footnote" class="footnote">8</a></sup><sup><a
+            href="#fn9-28786" id="fnr9-28786" title="see footnote" class="footnote">9</a></sup>, the field has never
+    been hotter.
+    However, defining precisely what we mean by a good representation can be tricky.
+    This has led to a somewhat ad-hoc approach to evaluation in the literature, with each paper choosing its own
+    measure or set of measures and a general sense that our evaluation methods aren't very robust.</p>
+
+<blockquote class="twitter-tweet" style="margin: 0 auto; display: block">
+    <p lang="en" dir="ltr">Though I&#39;m not a big fan of the evaluation protocol: linear classification on top of
+        unsupervised features learned on ImageNet.</p>&mdash; Oriol Vinyals (@OriolVinyalsML) <a
+        href="https://twitter.com/OriolVinyalsML/status/1228368026933719040?ref_src=twsrc%5Etfw">February 14,
+        2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>In a recent paper, <a href="https://arxiv.org/abs/2009.07368">Evaluating representations by the complexity of
+        learning low-loss predictors</a><sup><a href="#fn10-28786" id="fnr10-28786" title="see footnote"
+            class="footnote">10</a></sup>, we show that many notions of the quality of a representation for a task
+    can be expressed as a function of the <em>loss-data curve</em>.
+    This perspective allows us to see the limitations of existing measures and propose new ones that are more
+    robust.</p>
+
+<p>We think that evaluation is crucially important in the field right now and we don't want the measures that we and
+    others have proposed to languish as purely theoretical exercises.
+    Since these measures (ours and others) aren't trivial to implement or to compute, we are releasing <a
+        href="https://github.com/willwhitney/reprieve">a library called Reprieve</a> for representation evaluation
+    that aims to standardize the evaluation of representation quality.
+    Whether you're using the measures that we proposed or several others, and no matter what ML library you use, you
+    can evaluate representations with Reprieve.</p>
+<script src="https://tarptaeya.github.io/repo-card/repo-card.js"></script>
+<p>
+<div class="repo-card" data-repo="willwhitney/reprieve"
+    style="min-width: 300px; min-height: 115px; max-width: 600px; margin: 0 auto; background-image: url('/assets/img/reprieve_github.png'); background-position: center; background-size: contain; background-repeat: no-repeat">
+</div>
+</p>
+
+<h2>Loss-data curves and existing measures</h2>
+
+<p>The loss-data curve, with the size of the training set on the X axis and validation loss on the Y axis, describes
+    how an algorithm's performance varies based on the amount of training data it's given.
+    Intuitively, the curve for a representation that allows the algorithm to learn <em>efficiently</em> (with little
+    data) will lie to the left of the curve for a representation that makes learning less efficient.
+    Meanwhile a representation that contains more predictive information will lead to a curve that goes lower as the
+    training set size goes to infinity.</p>
+
+<figure>
+    <img src="/assets/img/fig1.png"
+        alt="Loss-data curves and representation quality measures. The red and blue curves are the result of using the same learning algorithm with two different representations of the data." />
+    <figcaption>Loss-data curves and representation quality measures. The red and blue curves are the result of
+        using the same learning algorithm with two different representations of the data.</figcaption>
+</figure>
+
+<p>On the loss-data curve we can graphically show the meaning of several existing evaluation measures for
+    representation quality (left panel).</p>
+
+<p><strong>Validation accuracy</strong> with limited data (VA) is the simplest measure. VA corresponds to picking
+    some <span class="math">\(n\)</span> for the dataset size and looking only at a vertical slice of the loss-data
+    curve at that <span class="math">\(n\)</span>.</p>
+
+<p><strong>Mutual information</strong> (MI) attempts to measure the quality of a representation by its mutual
+    information with the labels<sup><a href="#fn11-28786" id="fnr11-28786" title="see footnote"
+            class="footnote">11</a></sup>. MI is equivalent to considering only the validation loss with infinite
+    training data.</p>
+
+<p><strong>Minimum description length</strong> (MDL) is an interesting measure recently proposed by Voita et al.
+    (2020)<sup><a href="#fn12-28786" id="fnr12-28786" title="see footnote" class="footnote">12</a></sup>. Given a
+    fixed dataset, MDL measures the description length of the dataset's labels (the vector of all the Ys) given its
+    observations (the vector of all the Xs) according to a particular encoding scheme. In the <em>prequential</em>
+    or <em>online</em> coding scheme, a model is trained to predict <span class="math">\(p(Y^k \mid X^k)\)</span> on
+    a dataset of size <span class="math">\(k\)</span>, and then used to encode the <span
+        class="math">\((k+1)^{\mathrm{th}}\)</span> point. MDL corresponds to the area under the loss-data curve up
+    to <span class="math">\(n\)</span>, the full size of the dataset.</p>
+
+<p>An interesting feature of all these methods is that they depend on (or specify, for MI) a particular dataset
+    size.
+    This can be a bit tricky: how much data <em>should</em> an algorithm need to solve a new task?
+    Provide too little data and no representation will allow any learning, but provide too much and only asymptotic
+    loss will matter, not efficiency.</p>
+
+<p>Instead, we will construct an evaluation procedure that measures a property of the <em>data distribution</em> and
+    the <em>learning algorithm</em>, not a particular dataset or dataset size.</p>
+
+<h2>Surplus Description Length</h2>
+
+<p>We're going to build on the MDL idea to make a measure of representation quality.
+    To do this, we measure the complexity of learning for a given data distribution and learning algorithm.
+    We have two main goals for this representation evaluation measure:</p>
+
+<ol>
+    <li>It should measure a fundamental property of the data distribution and learning algorithm.</li>
+    <li>The measure shouldn't depend on a particular sample of a dataset from the data distribution, the size of the
+        dataset, or the order of the points.</li>
+</ol>
+
+<h3>Defining surplus description length</h3>
+
+<p>To start with, imagine trying to efficiently encode a large number of samples of some random variable <span
+        class="math">\(\mathbf{e}\)</span> which takes discrete values in <span class="math">\(\{1 \ldots
+        K\}\)</span> with probability <span class="math">\(p(\mathbf{e})\)</span>.
+    The best possible code for each sample leverages knowledge of the probability of observing that sample, and
+    assigns a code length of <span class="math">\(- \log p(e_i)\)</span> to each sampled value <span
+        class="math">\(e_i\)</span>.
+    This results in an expected length per sample of
+    <span class="math">\[
+        \mathbb{E}_\mathbf{e} [\ell_p(\mathbf{e})] = \mathbb{E}_\mathbf{e} [- \log p(\mathbf{e})] = H(\mathbf{e})
+        \]</span>
+    where we use <span class="math">\(\ell_p\)</span> to denote the negative log-likelihood loss for the
+    distribution <span class="math">\(p\)</span>.
+    Intuitively, the entropy <span class="math">\(H(\mathbf{e})\)</span> represents the amount of randomness in <span class="math">\(\mathbf{e}\)</span>; if we know the outcome of
+    the event we need to encode ahead of time, <span class="math">\(H(\mathbf{e}) = 0\)</span> and we don't need to transmit anything at all.
+    </p>
+
+<p>If instead <span class="math">\(\mathbf{e}\)</span> was encoded using some other distribution <span
+        class="math">\(\hat p\)</span>, the expected length becomes <span class="math">\(H(\mathbf{e}) +
+        D_{\mathrm{KL}}(p~||~\hat p)\)</span>.
+    We call <span class="math">\(D_{\mathrm{KL}}(p~||~\hat p)\)</span> the <em>surplus description length</em> (SDL)
+    from encoding according to <span class="math">\(\hat p\)</span> instead of <span class="math">\(p\)</span>.<sup><a href="#fn13-9372" id="fnr13-9372" title="see footnote" class="footnote">13</a></sup>
+    We can also write it as
+    <span class="math">\[
+        \mathrm{SDL}(\hat p)
+        = D_{\mathrm{KL}}(p~||~\hat p)
+        = \mathbb{E}_{\mathbf{e} \sim p} \left[ \log p(\mathbf{e}) - \log \hat p(\mathbf{e}) \right]
+        \]</span>
+    to highlight how SDL measures only the extra entropy that comes from not having the correct model.</p>
+
+<h3>SDL as a measure of representation quality</h3>
+
+<p>As our model learns we get a new <span class="math">\(\hat p\)</span> at every training step.
+    Similarly to MDL with online codes<sup><a href="#fn12-28786" title="see footnote" class="footnote">12</a></sup>,
+    we measure the SDL of the learned model at each step and then sum them up.
+    Writing the expected loss of running algorithm <span class="math">\(\mathcal{A}\)</span> on a dataset with <span
+        class="math">\(i\)</span> points as <span class="math">\(L(\mathcal{A}_\phi, i)\)</span>, the SDL measure of
+    representation quality is
+    <span class="math">\[
+        m_{\mathrm{SDL}}(\phi, \mathcal{D}, \mathcal{A}) = \sum_{i=1}^\infty \Big[ L(\mathcal{A}_\phi, i) -
+        H(\mathbf{Y} \mid \mathbf{X}) \Big].
+        \]</span></p>
+
+<p>We show in the paper that MDL is a special case of SDL which assumes that the true distribution of <span
+    class="math">\(\mathbf{Y} \mid \mathbf{X}\)</span> is a delta mass. That is to say, <span
+    class="math">\(H(\mathbf{Y} \mid \mathbf{X}) = 0\)</span> and the labels have no randomness at all.
+    This leads to some odd properties with real data, which typically has noise.
+    MDL goes to infinity with the size of the dataset even for algorithms which learn the true data distribution,
+    which makes numbers hard to compare.
+    More worryingly, if we rank the quality of two representations using MDL, that ranking can (and in practice
+    does) switch as we change the dataset size.
+    That means our conclusions about which representation is better are totally dependent on how much data we have
+    to evaluate them!</p>
+
+<p>Since in practice we don't know the true entropy of the data distribution, we also propose a version of the SDL
+    measure where we set some threshold <span class="math">\(\varepsilon\)</span> as a criterion for success instead
+    of using the true entropy of the data.
+    As long as <span class="math">\(\varepsilon &gt; H(\mathbf{Y} \mid \mathbf{X})\)</span>, this still has most of
+    the same nice properties.
+    A good way to set <span class="math">\(\varepsilon\)</span> would be to run the learning algorithm on a large
+    amount of data using the raw representation of the data, then set <span class="math">\(\varepsilon\)</span> to
+    the loss of that model plus a small slack term for estimation error.</p>
+
+<p>We also propose a simpler measure called <span class="math">\(\varepsilon\)</span> sample complexity, or <span
+        class="math">\(\varepsilon\)</span>SC, which is the number of training points required for the expected loss
+    to drop below <span class="math">\(\varepsilon\)</span>.
+    For full details on that <a href="https://arxiv.org/abs/2009.07368">check out the paper</a>! </p>
+
+<h2>Representation evaluation in practice</h2>
+
+<p>With our tools in hand, we can examine some practical representations.
+    Looking first at MNIST, we compare using the raw pixels to using neural encoders pretrained on supervised CIFAR
+    classification or trained without supervision as a low-dimensional VAE on MNIST.</p>
+
+<figure>
+    <img src="/assets/img/mnist_results.png"
+        alt="Results on MNIST. Since SDL measures a property of the data distribution, not a particular dataset, its values don't change as the dataset grows." />
+    <figcaption>Results on MNIST. Since SDL measures a property of the data distribution, not a particular dataset,
+        its values don't change as the dataset grows.</figcaption>
+</figure>
+
+<p>As you can see from the loss-data curve (right), these representations perform very differently!
+    While the VAE representation allows the quickest learning at first, it makes achieving very low loss hard.
+    Meanwhile the CIFAR pretrained representation supports learning that's more efficient than raw pixels for any
+    loss.</p>
+
+<p>Looking at the evaluation measures, we see that the existing measures like validation loss and MDL tend to switch
+    their rankings when larger datasets are used for evaluation.
+    Meanwhile SDL and <span class="math">\(\varepsilon\)</span>SC know when there isn't enough data available to
+    evaluate a representation, and once they make a judgement, it sticks.</p>
+
+<p>To show that this phenomenon isn't just limited to vision tasks or small datasets, we also provide experiments on
+    a part of speech classification task using pretrained representations from ELMo<sup><a href="#fn2-28786"
+            title="see footnote" class="footnote">2</a></sup>.
+    Just like on MNIST, validation loss and MDL make very different predictions with small evaluation datasets than
+    with large ones.</p>
+
+<figure>
+    <img src="/assets/img/elmo_results.png" alt="Results on part of speech classification." />
+    <figcaption>Results on part of speech classification.</figcaption>
+</figure>
+
+<h2>Better representation evaluation for everyone</h2>
+
+<p>Existing measures of representation quality, which are functions of a particular dataset rather than the data
+    distribution, can have some tricky behavior.
+    Whether you use our measures or not, we urge our fellow members of the representation learning community to
+    think carefully about the measures and procedures that you use to evaluate representations.</p>
+
+<p><a href="https://github.com/willwhitney/reprieve">Reprieve</a>, our library for representation evaluation, is one
+    tool that we think can help.
+    By using the powerful program transformations provided by <a href="https://github.com/google/jax">JAX</a>,
+    Reprieve is able to train the ~100 or so small networks required to construct a loss-data curve in parallel on
+    one GPU in about two minutes.
+    From there it can compute all of the measures that we mentioned today.</p>
+
+<p>We hope that by standardizing on one codebase for evaluation, we in the representation learning community can
+    move faster while producing results that are more comparable and more reproducible.
+    If Reprieve is missing a measure that you think is important, submit a pull request!</p>
+<div class="page-break" style="page-break-before: always;"></div>
+
+<div class="footnotes">
+    <hr />
+    <ol>
+
+        <li id="fn1-28786">
+            <p>Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova. <a
+                    href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers
+                    for Language Understanding</a>. <a href="#fnr1-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn2-28786">
+            <p>Matthew E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke
+                Zettlemoyer. <a href="https://arxiv.org/abs/1802.05365">Deep contextualized word
+                    representations</a>. <a href="#fnr2-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn3-28786">
+            <p>Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke
+                Zettlemoyer, Veselin Stoyanov. <a href="https://arxiv.org/abs/1907.11692">RoBERTa: A Robustly
+                    Optimized BERT Pretraining Approach</a>. <a href="#fnr3-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn4-28786">
+            <p>Ting Chen, Simon Kornblith, Mohammad Norouzi, Geoffrey Hinton. <a
+                    href="https://arxiv.org/abs/2002.05709">A Simple Framework for Contrastive Learning of Visual
+                    Representations</a>. <a href="#fnr4-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn5-28786">
+            <p>Aaron van den Oord, Yazhe Li, Oriol Vinyals. <a
+                    href="https://arxiv.org/abs/1807.03748">Representation Learning with Contrastive Predictive
+                    Coding</a>. <a href="#fnr5-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn6-28786">
+            <p>Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, Ross Girshick. <a
+                    href="https://arxiv.org/abs/1911.05722">Momentum Contrast for Unsupervised Visual Representation
+                    Learning</a>. <a href="#fnr6-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn7-28786">
+            <p>Aravind Srinivas, Michael Laskin, Pieter Abbeel. <a href="https://arxiv.org/abs/2004.04136">CURL:
+                    Contrastive Unsupervised Representations for Reinforcement Learning</a>. <a href="#fnr7-28786"
+                    title="return to article" class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn8-28786">
+            <p>Carles Gelada, Saurabh Kumar, Jacob Buckman, Ofir Nachum, Marc G. Bellemare. <a
+                    href="https://arxiv.org/abs/1906.02736">DeepMDP: Learning Continuous Latent Space Models for
+                    Representation Learning</a>. <a href="#fnr8-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn9-28786">
+            <p>Amy Zhang, Rowan McAllister, Roberto Calandra, Yarin Gal, Sergey Levine. <a
+                    href="https://arxiv.org/abs/2006.10742">Learning Invariant Representations for Reinforcement
+                    Learning without Reconstruction</a>. <a href="#fnr9-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn10-28786">
+            <p>William F. Whitney, Min Jae Song, David Brandfonbrener, Jaan Altosaar, Kyunghyun Cho. <a
+                    href="https://arxiv.org/abs/2009.07368">Evaluating representations by the complexity of learning
+                    low-loss predictors</a>. <a href="#fnr10-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn11-28786">
+            <p>Note that to actually measure the mutual information between the random variables of the
+                representation and data requires arbitrarily large models, infinite data, and unbounded computation.
+                Mutual information is not a nice quantity to compute with. <a href="#fnr11-28786"
+                    title="return to article" class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+        <li id="fn12-28786">
+            <p>Elena Voita, Ivan Titov. <a href="https://arxiv.org/abs/2003.12298">Information-Theoretic Probing
+                    with Minimum Description Length</a>. <a href="#fnr12-28786" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+        <li id="fn13-9372">
+            <p>Encoding using the wrong distribution means that some event which happens often must have gotten a long code, and
+                in exchange some uncommon event got a short code.
+                It's as if someone made up a new language that made &quot;the&quot; 8 letters long and &quot;eggplant&quot; only
+                3; it would be convenient once a week when you type &quot;eggplant&quot;, but really annoying the 100 times a
+                day you type &quot;the&quot;. <a href="#fnr13-9372" title="return to article"
+                    class="reversefootnote">&#8617;&#xFE0E;</a></p>
+        </li>
+
+    </ol>
+</div>

@@ -1,7 +1,11 @@
 <div class="menu">
   <nav class="menu-content">
     {% for item in site.data.settings.menu %}
-      <a href="/menu/{{ item.url }}">{{ item.name }}</a>
+      <a
+        href="{{ item.url }}"
+        class="{% if item.url == page.url %}active{% endif %}">
+        {{ item.name }}
+      </a>
     {% endfor %}
   </nav>
   <nav class="social-icons">
