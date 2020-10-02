@@ -6,7 +6,7 @@ disqus:              #"your-disqus"
 # Build settings
 markdown:            kramdown
 permalink:           none
-gems:
+plugins:
     - jekyll-paginate
     - jekyll-feed
 
