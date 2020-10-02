@@ -62,6 +62,10 @@ p {
   word-wrap: break-word;
 }
 
+strong {
+  font-variation-settings: "wght" 600;
+}
+
 blockquote {
   border-left: 0.25rem solid #ccc;
   margin: 1.5em 10px;
