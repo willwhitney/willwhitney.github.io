@@ -15,6 +15,8 @@ My interests include the inductive biases of neural networks, learned structure 
 
 ## Publications
 
+David Brandfonbrener, William F. Whitney, Rajesh Ranganath, and Joan Bruna. [Bandit Overfitting in Offline Policy Learning](assets/papers/Bandit.Overfitting.in.Offline.Policy.Learning.pdf). In submission.
+
 William F. Whitney, Min Jae Song, David Brandfonbrener, Jaan Altosaar, and Kyunghyun Cho. [Evaluating representations by the complexity of learning low-loss predictors](assets/papers/Evaluating.representations.by.the.complexity.of.learning.low.loss.predictors.pdf). In submission.
 
 William F. Whitney, Rajat Agarwal, Kyunghyun Cho, and Abhinav Gupta. [Dynamics-aware Embeddings](assets/papers/Dynamics.aware.Embeddings.pdf). In _International Conference on Learning Representations_, 2020.
