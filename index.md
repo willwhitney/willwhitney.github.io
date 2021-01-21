@@ -5,12 +5,16 @@ title: About Me
 
 ![me in lab](assets/img/in_lab.jpg)
 
-I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I'm also the creator of [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which has been downloaded >2,000,000 times.
+I'm Will Whitney, a PhD student working with Kyunghyun Cho at NYU. I've done internships at DeepMind with Martin Riedmiller and at FAIR with Abhinav Gupta. Before this I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I'm also the creator of [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which has been downloaded >2,000,000 times.
 
 ## Research interests
-Currently I'm working on representation learning and reinforcement learning for continuous control. Previously I worked on generative models with interpretable latent spaces.
+My research focuses on the problem of sample-efficient learning, mostly in the domain of reinforcement learning for continuous control. This breaks down into a few smaller problems:
 
-My interests include the inductive biases of neural networks, learned structure in latent spaces, and robotics. Most recently I've become very interested in questions of sample complexity and expressivity: what makes a function easy or hard to approximate with a neural network?
+- How should we explore in order to learn a policy as rapidly as possible with off-policy RL?
+- What factors make an algorithm work well or poorly when trained with data that is very far off policy?
+- What auxiliary objectives or artifacts, such as learned representations, would enable learning to be more sample efficient?
+
+Previously I worked on generative models with interpretable latent spaces. My interests include the inductive biases of neural networks, learned structure in latent spaces, and robotics. I've also been interested in questions of sample complexity and expressivity: what makes a function easy or hard to approximate with a neural network?
 
 
 ## Publications

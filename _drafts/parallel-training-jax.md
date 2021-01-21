@@ -45,6 +45,8 @@ Unlike the ResNet, which uses ~100% of the GPU, the MLP may only use 2-3%.
 A simple explanation is that their computation graphs aren't as wide as the GPU is.
 Glossing over a ton of complexity about data loading, fixed costs per loop, and how GPUs actually work, a small network with a reasonable batch size just doesn't have enough parallelizable operations to use the entire GPU efficiently.
 
+> mention result that tiny networks are just as fast on a mac mini as on a V100 https://wandb.ai/vanpelt/m1-benchmark/reports/Can-Apple-s-M1-help-you-train-models-faster-cheaper-than-NVIDIA-s-V100---VmlldzozNTkyMzg
+
 
 ## Large batches fill GPUs but train worse
 
