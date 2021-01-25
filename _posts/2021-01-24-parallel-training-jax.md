@@ -7,10 +7,10 @@ date: 2021-01-24
 **TO DO**:
 
 - [X] add plot of full-batch training
-- [ ] add Jupyter notebook and link
+- [x] add Jupyter notebook and link
 - [ ] table of contents
 - [X] shill for reprieve
-- [ ] some kind of teaser image
+- [x] some kind of teaser image
 -->
 
 # Parallel neural network training with JAX
@@ -23,12 +23,20 @@ If you haven't tried JAX yet, this may give you a reason to.
 All of this was originally implemented as part of my library for evaluating representations, [reprieve](https://github.com/willwhitney/reprieve).
 If you're interested in learning about the pitfalls of representation learning research and how to avoid them, I wrote [a blog post](/representation-quality-and-the-complexity-of-learning.html) on that too.
 
-If you're just here for the code, there's a [Jupyter notebook](https://github.com/willwhitney/willwhitney.github.io/tree/master/assets/notebooks/jax_parallel.ipynb) that has what you need.
+If you're just here for the code, there's a [colab](https://colab.research.google.com/drive/1-hVEZ8jck2nzIqmRgSmjQvxJp1wO2HI5?usp=sharing) that has what you need.
 
 
-**Table of contents**
+<div id="bootstrap_compare_chart" class="chart"></div>
+<script src="/assets/js/bootstrap_compare_spec.js"></script>
+<script>
+    var embedOpt = {"mode": "vega-lite"};
+    vegaEmbed("#bootstrap_compare_chart", spec, embedOpt);
+</script>
 
-{{TOC}}
+
+<!-- **Table of contents**
+
+{{TOC}} -->
 
 
 ## The difficulty of accelerating small networks
@@ -146,7 +154,7 @@ Our result will be the same as if we iterated over the first dimension of `a`, a
 
 Now that we have the basics of JAX, we can start implementing a parallel training scheme.
 The basic idea is simple: we will write a function that creates a neural network, and a function that updates that network, and then we'll call `vmap` on them.
-For full code please refer to the [Jupyter notebook](https://github.com/willwhitney/willwhitney.github.io/tree/master/assets/notebooks/jax_parallel.ipynb) that accompanies this post.
+For full code please refer to the [colab](https://colab.research.google.com/drive/1-hVEZ8jck2nzIqmRgSmjQvxJp1wO2HI5?usp=sharing) that accompanies this post.
 
 I've defined a simple classification dataset: two spirals in 2D.
 We can control the amount of noise in the data and how tight the spiral is.
