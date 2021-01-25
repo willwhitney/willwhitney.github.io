@@ -1,16 +1,16 @@
 <div class="menu">
   <nav class="menu-content">
     {% for item in site.data.settings.menu %}
-      <a
+      <h3 class="menu-item"><a
         href="{{ item.url }}"
         class="{% if item.url == page.url %}active{% endif %}">
         {{ item.name }}
-      </a>
+      </a></h3>
     {% endfor %}
   </nav>
-  <nav class="social-icons">
+  <!-- <nav class="social-icons">
     {% for item in site.data.settings.social %}
       <a href="{{ item.link }}" target="_blank"><i class="fa fa-{{ item.icon }}" aria-hidden="true"></i></a>
     {% endfor %}
-  </nav>
+  </nav> -->
 </div>
