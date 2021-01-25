@@ -26,11 +26,11 @@ If you're interested in learning about the pitfalls of representation learning r
 If you're just here for the code, there's a [colab](https://colab.research.google.com/drive/1-hVEZ8jck2nzIqmRgSmjQvxJp1wO2HI5?usp=sharing) that has what you need.
 
 
-<div id="bootstrap_compare_chart" class="chart"></div>
+<div id="teaser_chart" class="chart"></div>
 <script src="/assets/js/bootstrap_compare_spec.js"></script>
 <script>
     var embedOpt = {"mode": "vega-lite"};
-    vegaEmbed("#bootstrap_compare_chart", spec, embedOpt);
+    vegaEmbed("#teaser_chart", spec, embedOpt);
 </script>
 
 
