@@ -1,5 +1,5 @@
 ---
-title: Parallelizing small neural nets on one GPU with JAX
+title: Parallelizing neural networks on one GPU with JAX
 subtitle: How you can get a 100x speedup for training small neural networks by making the most of your accelerator.
 date: 2021-01-24
 ---
