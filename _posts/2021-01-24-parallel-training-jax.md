@@ -1,7 +1,10 @@
 ---
-title: Parallel neural network training with JAX
+title: Parallelizing small neural nets on one GPU with JAX
+subtitle: How you can get a 100x speedup for training small neural networks by making the most of your accelerator.
 date: 2021-01-24
 ---
+
+<!-- Code for this post was written in https://github.com/willwhitney/jax-parallel -->
 
 <!--
 **TO DO**:
@@ -13,10 +16,12 @@ date: 2021-01-24
 - [x] some kind of teaser image
 -->
 
-# Parallel neural network training with JAX
+Most neural network libraries these days give amazing computational performance for training _large_ neural networks.
+But small networks, which aren't big enough to usefully "fill" a GPU, leave a lot of available compute unused.
+Running a small network on a GPU is a bit like buying an apartment building and then living in the janitor's closet.
 
-While every neural network library gives amazing computational performance for training large neural networks, smaller networks which aren't big enough to usefully "fill" a GPU leave a lot of available compute unused.
-In this article, I describe how to efficiently train dozens of small neural networks in parallel on a single GPU using the [`vmap`](https://jax.readthedocs.io/en/latest/notebooks/quickstart.html#Auto-vectorization-with-vmap) function from [JAX](https://github.com/google/jax).
+In this article, I describe how to get your money's worth by training dozens of networks at once.
+As you follow along, we'll efficiently train dozens of small neural networks in parallel on a single GPU using the [`vmap`](https://jax.readthedocs.io/en/latest/notebooks/quickstart.html#Auto-vectorization-with-vmap) function from [JAX](https://github.com/google/jax).
 Whether you are training ensembles, sweeping over hyperparameters, or averaging across random seeds, this technique can give you a 10x-100x improvement in computation time.
 If you haven't tried JAX yet, this may give you a reason to.
 
@@ -26,7 +31,9 @@ If you're interested in learning about the pitfalls of representation learning r
 If you're just here for the code, there's a [colab](https://colab.research.google.com/drive/1-hVEZ8jck2nzIqmRgSmjQvxJp1wO2HI5?usp=sharing) that has what you need.
 
 
-![Comparison of a single network versus a bootstrapped ensemble](/assets/img/bootstrap_compare.png)
+<!-- ![Comparison of a single network versus a bootstrapped ensemble](/assets/img/bootstrap_compare.png) -->
+
+{% include figure.html url="/assets/img/bootstrap_compare.png" caption="Comparison of a single network versus a bootstrapped ensemble. With parallel training, ensembles of small networks are just as quick to train as a single net." %}
 
 <!--
 <div id="teaser_chart" class="chart"></div>
@@ -48,8 +55,8 @@ With the end of Moore's Law-style clock speed scaling, modern high-performance c
 They are _wider_, not _faster_.
 This applies to accelerators like GPUs and TPUs, or even Apple's new [laptop SoCs](https://debugger.medium.com/why-is-apples-m1-chip-so-fast-3262b158cba2).
 
-The operations used in neural network training are almost ideal for taking advantage of very wide architectures.
-Large matrix multiplies consist of huge numbers of smaller operations which can be executed at the same time.
+The operations used in neural network training are pretty ideal for taking advantage of very wide architectures.
+Large matrix multiplies consist of huge numbers of smaller operations that can be executed at the same time.
 On top of that, we always use minibatch training, where we compute a loss gradient on tens, hundreds, or thousands of examples in parallel, then average those gradients to estimate the "true" gradient on the dataset.
 
 Modern automatic differentiation libraries like [PyTorch](https://pytorch.org) are optimized for squeezing as much performance as possible out of a wide accelerator for these kinds of workloads.
@@ -70,13 +77,14 @@ https://wandb.ai/vanpelt/m1-benchmark/reports/Can-Apple-s-M1-help-you-train-mode
 -->
 
 
-## Large batches fill GPUs but train worse
+## Large batches fill GPUs but learn worse
 
 One way to use more compute in parallel would be to increase the batch size.
 Instead of using batches of, say, 128 elements, we could crank that up until we fill the GPU.
 In fact, why not use the entire dataset as one batch and parallelize across every element!
 
 On MNIST, we can actually try this.
+With a batch size of 128, we see GPU utilization at ~2% and a speed of about 11s / epoch.
 By caching the entire dataset in GPU memory and performing full-batch gradient descent (i.e. using the whole dataset as one batch), we can get up to a frankly disturbing 0.01s / epoch with 97% GPU utilization!
 
 <!-- TODO: ADD PLOT -->
@@ -90,7 +98,8 @@ A theoretical argument against very large batches comes from a classic paper by 
 We can think of a full-batch gradient descent update as being very accurate, but computationally expensive, and a small-batch update as being highly approximate, but very cheap.
 Bottou & Bousquet show that taking lots of approximate updates results in much faster learning than taking fewer accurate updates.
 
-So while using very large batches can definitely saturate our GPU, they don't actually help us train a small network any faster.
+While using very large batches can definitely saturate our GPU, they don't actually help us train a small network any faster.
+So what can we do instead?
 
 
 ## Training more networks in parallel
@@ -103,11 +112,12 @@ But we're still leaving an additional 100x improvement on the table, at least ac
 What should we do with the whole rest of our GPU?
 Well, in practice we often don't just want to train _one_ neural network.
 We might want to run with many random seeds to be confident in our results, or we could sweep over different hyperparameter settings, or we could even train a [bootstrapped](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) ensemble of networks for higher accuracy.
-Instead of waiting for our first network to finish training before starting the next, we could run them all at the same time!
+Instead of waiting for our first network to finish training before starting the next, we could run all of these experiments at the same time!
 
-In the simplest version of this, we could run our training script multiple times, putting several copies of (almost) the same job on the same GPU.
+The simplest version of this is to run our training script multiple times, putting several copies of (almost) the same job on the same GPU.
 This works, and has the advantage of flexibility: those jobs don't have to have anything in common, they just have to stay within the memory budget of the GPU.
-However, it has a lot of overhead: you get multiple Python processes, multiple copies of the library on the GPU, multiple data transfer calls between CPU and GPU... the list goes on.
+It treats your GPU like a tiny cluster, agnostic to the content of the job scripts.
+However, this deployment strategy has a lot of overhead: you get multiple Python processes, multiple copies of the library on the GPU, multiple data transfer calls between CPU and GPU... the list goes on.
 In practice you can run a few small jobs on one GPU, but you'll run out of GPU memory and clog your GPU before you get to 100.
 
 Instead we're going to see how to avoid duplicating work for our computer by writing an ordinary training step function, then using JAX to batch the computation over many neural networks at once.
@@ -115,14 +125,14 @@ Instead we're going to see how to avoid duplicating work for our computer by wri
 
 ### Automatic batching with JAX and `vmap`
 
+A lot has been written about JAX in the past, so I'll give only a cursory introduction.
 [JAX](https://github.com/google/jax) is an exciting new library for fast differentiable computation with support for accelerators like GPUs and TPUs.
 It is not a neural network library; in a nutshell, it's a library that you could build a neural network library on top of.
 At the core of JAX are a few functions which take in functions as arguments and return _new_ functions, which are transformed versions of the old ones.
 It also includes an accelerator-backed version of [numpy](https://numpy.org), packaged as `jax.numpy`, which I will refer to as `jnp`.
-
-A lot has been written about JAX in the past, so I'll give only a cursory introduction here.
 For more I'll refer you to [Eric Jang's nice introduction](https://blog.evjang.com/2019/02/maml-jax.html), which covers meta-learning in JAX, and the [JAX quickstart guide](https://jax.readthedocs.io/en/latest/notebooks/quickstart.html).
-Here's a quick summary of the core functions in JAX that we'll use, along with the arguments we care about:
+
+On to a quick summary of the core functions in JAX that we'll use, along with the arguments we care about:
 
 [`jax.jit(fun, ...)`](https://jax.readthedocs.io/en/latest/jax.html#jax.jit): Takes a function `fun` and returns a faster version. There's more to it than this, but enough for our purposes.
 
@@ -134,14 +144,15 @@ In essence, what we did was:
 
 [`jax.vmap(fun, in_axes=0, ...)`](https://jax.readthedocs.io/en/latest/jax.html#jax.vmap):
 Takes a function `fun` and returns a _batched_ version of that function by vectorizing each input along the axis specified by `in_axes`.
-Under the hood this does basically the same thing that you would if you were vectorizing something by hand.
+`vmap` is short for vectorized map; if you're familiar with `map` in other programming languages, `vmap` is a similar idea.
 
+Under the hood `vmap` does basically the same thing that you would if you were vectorizing something by hand.
 For instance, suppose we had a PyTorch function `def f(a, b): torch.mm(a, b)` that applies to matrices, but we are given a _batch_ of matrices at a time.
 We could compute the answer with a `for` loop, but it would be slow.
 Instead we can look up the batched PyTorch function which computes batched matrix multiply (it's `bmm`), and define the function `def vf(a, b): torch.bmm(a, b)`.
 We have transformed `f` by hand into a vectorized version, `vf`.
 
-In JAX we could do the same thing automatically using `vmap`.
+In JAX we can do the same thing automatically using `vmap`.
 If we had a function `def f(a, b): jnp.matmul(a, b)`, we could simply do `v = jax.vmap(f)`.
 Crucially, this doesn't just work for primitive functions.
 You can call `vmap` on functions that are almost arbitrarily complicated, including functions that include `jax.grad`.
@@ -286,7 +297,7 @@ Unsurprisingly, this works pretty well.
 
 If our hypothesis is correct, we can plug these functions into `vmap` and be embarrassingly parallel!
 We will use `in_axes` with `vmap` to control which axes we parallelize over.
-In our `init_fn`, which takes the input shape as an argument, we want to use the same input shape for every network, so we set in corresponding element of `in_axes` to `None`.
+In our `init_fn`, which takes the input shape as an argument, we want to use the same input shape for every network, so we set the corresponding element of `in_axes` to `None`.
 For now all of our networks will update on the same batch at each step, so in defining `parallel_train_step_fn` we parallelize over the model state, but not over the batch of data: `in_axes=(0, None)`.
 The number of random seeds we feed in to `parallel_init_fn` will determine how many networks we train, in this case 10.
 
@@ -315,6 +326,12 @@ This basically delivers our missing 100x speedup:
 > We can't train _one_ MLP 40,000x as fast as a ResNet, but we can train _100_ MLPs 400x as fast as a ResNet.
 
 <!-- One other interesting thing to note is that the loss for the solo network and for the first network in the batch is the same (up to machine precision) because they were initialized with the same seed. -->
+
+If you're just here for speed, you're done!
+By passing a different seed to initialize each network with, this procedure will train many different networks at once in a way that's useful for evaluating things like robustness to parameter initialization.
+If you'd like to do a hyperparameter sweep, you can use different hyperparameters for each network in the network intitialization.
+But if you're interested in getting more out of this technique, in the next section I describe how to use parallel training to learn a bootstrapped ensemble for improved uncertainty calibration.
+
 
 ## Bootstrapped ensembles
 
@@ -522,11 +539,8 @@ By contrast, the bootstrapped ensemble (right) does a much better job of being u
 ## Conclusions
 
 Practically anytime you're training a neural network, you would rather train several networks.
-Whether you're running multiple random seeds to make sure your results are reproducible, you're sweeping over learning rates to get the best results, or (as shown here) you're ensembling to improve calibration, there's always _something_ useful you could do with more runs.
+Whether you're running multiple random seeds to make sure your results are reproducible, sweeping over learning rates to get the best results, or (as shown here) ensembling to improve calibration, there's always _something_ useful you could do with more runs.
 By parallelizing training with JAX, you can run large numbers of small-scale experiments lightning fast.
-
-Running a small network on a GPU is a bit like buying an apartment building and then living in the janitor's closet.
-Get your money's worth by training dozens of networks at once instead!
 
 
 ---

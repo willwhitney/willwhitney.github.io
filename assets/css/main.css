@@ -175,6 +175,13 @@ a.footnote {
   list-style: none;
 }
 
+.post-subtitle {
+  margin-top: -20px;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-variation-settings: "wght" 400;
+}
+
 .post-date {
   display: block;
   margin-top:3px;

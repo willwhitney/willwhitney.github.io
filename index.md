@@ -19,7 +19,7 @@ Previously I worked on generative models with interpretable latent spaces. My in
 
 ## Publications
 
-William F. Whitney, Michael Bloesch, Jost Tobias Springenberg, Abbas Abdolmaleki, and Martin Riedmiller. [Rethinking Exploration for Sample-Efficient Policy Learning](assets/papers/Rethinking.Exploration.for.Sample.Efficient.Policy.Learning.pdf). Preliminary paper. _arXiv preprint arXiv:2101.09458_, 2021.
+William F. Whitney, Michael Bloesch, Jost Tobias Springenberg, Abbas Abdolmaleki, and Martin Riedmiller. [Rethinking Exploration for Sample-Efficient Policy Learning](assets/papers/Rethinking.Exploration.for.Sample.Efficient.Policy.Learning.pdf). Preliminary work. _arXiv preprint arXiv:2101.09458_, 2021.
 
 David Brandfonbrener, William F. Whitney, Rajesh Ranganath, and Joan Bruna. [Bandit Overfitting in Offline Policy Learning](assets/papers/Bandit.Overfitting.in.Offline.Policy.Learning.pdf). In submission.
 
