@@ -543,6 +543,11 @@ Whether you're running multiple random seeds to make sure your results are repro
 By parallelizing training with JAX, you can run large numbers of small-scale experiments lightning fast.
 
 
+### Acknowledgements
+Thanks to Tegan Maharaj and David Brandfonbrener for reading drafts of this article and providing helpful feedback.
+The JAX community was instrumental in helping me figure all of this stuff out, especially [Matt Johnson](https://twitter.com/SingularMattrix), [Avital Oliver](https://twitter.com/avitaloliver), and [Anselm Levskaya](https://twitter.com/anselmlevskaya).
+Thanks are also due to my co-authors on our [representation evaluation paper](https://arxiv.org/abs/2009.07368), including Min Jae Song, David Brandfonbrener (again), Jaan Altosaar, and my advisor Kyunghyun Cho.
+
 ---
 
 [^flop_counter]: Thanks to the excellent [FLOPs counter](https://github.com/sovrasov/flops-counter.pytorch) by [sovrasov](https://github.com/sovrasov).
