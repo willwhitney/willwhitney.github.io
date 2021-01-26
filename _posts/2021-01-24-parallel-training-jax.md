@@ -48,6 +48,11 @@ If you're just here for the code, there's a [colab](https://colab.research.googl
 
 {{TOC}} -->
 
+<!-- **Table of contents** -->
+
+* toc
+{:toc}
+
 
 ## The difficulty of accelerating small networks
 
@@ -481,7 +486,11 @@ def bootstrap_multi_iterator(dataset, dataset_indices):
     return loader_iter
 ```
 
-Finally, we can change one argument to our `vmap` of `train_step_fn`, construct our iterator, and we're ready to go!
+
+### Training the bootstrapped ensemble
+
+Thanks to the flexibility of the JAX API, switching from training $K$ networks on one batch of data to training $K$ networks on $K$ batches of data is super simple.
+We can change one argument to our `vmap` of `train_step_fn`, construct our iterator, and we're ready to go!
 
 ```python
 # same as before
@@ -536,14 +545,15 @@ The single network predicts labels for almost the entire space with _absolute_ c
 By contrast, the bootstrapped ensemble (right) does a much better job of being uncertain near the boundary between the classes.
 
 
-## Conclusions
+## Conclusion
 
 Practically anytime you're training a neural network, you would rather train several networks.
 Whether you're running multiple random seeds to make sure your results are reproducible, sweeping over learning rates to get the best results, or (as shown here) ensembling to improve calibration, there's always _something_ useful you could do with more runs.
 By parallelizing training with JAX, you can run large numbers of small-scale experiments lightning fast.
 
 
-### Acknowledgements
+**Acknowledgements**
+
 Thanks to Tegan Maharaj and David Brandfonbrener for reading drafts of this article and providing helpful feedback.
 The JAX community was instrumental in helping me figure all of this stuff out, especially [Matt Johnson](https://twitter.com/SingularMattrix), [Avital Oliver](https://twitter.com/avitaloliver), and [Anselm Levskaya](https://twitter.com/anselmlevskaya).
 Thanks are also due to my co-authors on our [representation evaluation paper](https://arxiv.org/abs/2009.07368), including Min Jae Song, David Brandfonbrener (again), Jaan Altosaar, and my advisor Kyunghyun Cho.

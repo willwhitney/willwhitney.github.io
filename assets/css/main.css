@@ -182,6 +182,34 @@ a.footnote {
   font-variation-settings: "wght" 400;
 }
 
+/*
+  Table of contents
+*/
+
+#markdown-toc::before {
+  content: "Table of contents";
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+#markdown-toc ul {
+  /* margin-top: 5px; */
+  list-style: decimal;
+}
+
+#markdown-toc {
+  /* border: 1px solid #aaa; */
+  padding: 1.5em;
+  list-style: decimal;
+  display: inline-block;
+}
+
+
+
+
 .post-date {
   display: block;
   margin-top:3px;
