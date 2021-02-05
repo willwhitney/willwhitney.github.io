@@ -6,15 +6,6 @@ date: 2021-01-24
 
 <!-- Code for this post was written in https://github.com/willwhitney/jax-parallel -->
 
-<!--
-**TO DO**:
-
-- [X] add plot of full-batch training
-- [x] add Jupyter notebook and link
-- [ ] table of contents
-- [X] shill for reprieve
-- [x] some kind of teaser image
--->
 
 Most neural network libraries these days give amazing computational performance for training _large_ neural networks.
 But small networks, which aren't big enough to usefully "fill" a GPU, leave a lot of available compute unused.
@@ -550,6 +541,20 @@ By contrast, the bootstrapped ensemble (right) does a much better job of being u
 Practically anytime you're training a neural network, you would rather train several networks.
 Whether you're running multiple random seeds to make sure your results are reproducible, sweeping over learning rates to get the best results, or (as shown here) ensembling to improve calibration, there's always _something_ useful you could do with more runs.
 By parallelizing training with JAX, you can run large numbers of small-scale experiments lightning fast.
+
+
+**Citing**
+
+If this blog post was useful to your research, you can cite it using
+
+```bib
+@misc{Whitney2021Parallelizing,
+    author = {William F. Whitney},
+    title = { {Parallelizing neural networks on one GPU with JAX} },
+    year = {2021},
+    url = {http://willwhitney.com/parallel-training-jax.html},
+}
+```
 
 
 **Acknowledgements**
