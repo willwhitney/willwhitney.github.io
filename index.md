@@ -21,7 +21,7 @@ Previously I worked on generative models with interpretable latent spaces. My in
 
 William F. Whitney, Michael Bloesch, Jost Tobias Springenberg, Abbas Abdolmaleki, and Martin Riedmiller. [Rethinking Exploration for Sample-Efficient Policy Learning](assets/papers/Rethinking.Exploration.for.Sample.Efficient.Policy.Learning.pdf). Working paper. _arXiv preprint arXiv:2101.09458_, 2021.
 
-David Brandfonbrener, William F. Whitney, Rajesh Ranganath, and Joan Bruna. [Bandit Overfitting in Offline Policy Learning](assets/papers/Bandit.Overfitting.in.Offline.Policy.Learning.pdf). In submission, 2021.
+David Brandfonbrener, William F. Whitney, Rajesh Ranganath, and Joan Bruna. [Offline Contextual Bandits with Overparameterized Models](assets/papers/Offline.Contextual.Bandits.with.Overparameterized.Models.pdf). In submission, 2021.
 
 William F. Whitney, Min Jae Song, David Brandfonbrener, Jaan Altosaar, and Kyunghyun Cho. [Evaluating representations by the complexity of learning low-loss predictors](assets/papers/Evaluating.representations.by.the.complexity.of.learning.low.loss.predictors.pdf). In submission, 2021.
 
