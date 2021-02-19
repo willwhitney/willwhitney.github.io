@@ -219,6 +219,15 @@ a.footnote {
   font-size:0.8rem;
 }
 
+.theme-credit {
+  display: block;
+  margin-top:15px;
+  margin-bottom: 1rem;
+  color: #9a9a9a;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size:0.8rem;
+}
+
 @media (max-width: 30rem) {
   .posts h1 {
     font-size: 1.5rem;
@@ -301,9 +310,9 @@ a.footnote {
   padding-bottom: 7px;
 }
 
-.menu-content {
+/* .menu-content {
   float: left;
-}
+} */
 
 .menu-content a {
   color: #999;
@@ -321,12 +330,13 @@ a.footnote {
 }
 
 .social-icons {
-  float: right;
+  /* float: right; */
 }
 
 .social-icons a {
   color: #999;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  padding: 0 6px 0 6px;
 }
 
 @media (min-width: 768px) {
