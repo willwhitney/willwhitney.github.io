@@ -94,6 +94,37 @@ figcaption {
   font-style: italic;
   font-variation-settings: "wght" 500;
 }
+/* .multi-figure {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+.subfigure {
+  flex-basis: calc(40% - 20px);
+  text-align: center;
+}
+subfigure img {
+  max-width: 100%;
+  height: auto;
+} */
+
+.multi-figure {
+  display: flex; /* Enables flexbox for the container */
+  align-items: flex-start; /* Aligns items at the start of the flex container */
+  justify-content: space-between; /* Even spacing to fill the row. */
+}
+
+.subfigure {
+  /* Removes default flex item settings to allow varying widths */
+  margin: 10px; /* Optional: Adds some space between the figures */
+}
+
+.subfigure img {
+  width: auto; /* Adjusts the width to maintain the aspect ratio */
+  display: block; /* Removes the default inline behavior of images, which includes extra space below the image */
+}
+
 
 @media (max-width: 768px) {
   figure {

@@ -5,7 +5,7 @@ title: About Me
 
 ![me in lab](assets/img/in_lab.jpg)
 
-I'm Will Whitney, a research scientist at DeepMind on the Control team. I got my PhD working with Kyunghyun Cho at NYU. Before that I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I'm also created [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which was downloaded >2,000,000 times.
+I'm Will Whitney, a research scientist at DeepMind on the Control team. I got my PhD working with Kyunghyun Cho at NYU. Before that I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I also created [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which was downloaded >2,000,000 times.
 
 ## Research interests
 My research focuses on the problem of sample-efficient learning, mostly in the domain of robotics. What kinds of algorithms can take advantage of the structure of our 3D physical world to make learning more efficient, and how do they scale with additional data?

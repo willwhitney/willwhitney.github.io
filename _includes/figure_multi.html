@@ -1,0 +1,12 @@
+{% assign urls = include.url | split: ',' %}
+{% assign captions = include.caption | split: ',,' %}
+<div class="multi-figure">
+  {% for url in urls %}
+    <figure class="subfigure">
+        <img src="{{ url }}" alt="" style="height: {{ include.height }}px;">
+        {% if captions[forloop.index0] %}
+          <figcaption>{{ captions[forloop.index0] }}</figcaption>
+        {% endif %}
+    </figure>
+  {% endfor %}
+</div>
