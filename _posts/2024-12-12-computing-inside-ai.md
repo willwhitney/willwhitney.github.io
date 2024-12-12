@@ -1,3 +1,9 @@
+---
+title: Computing inside an AI
+subtitle: What would it mean to treat AI as a tool instead of a person?
+date: 2024-12-12
+---
+
 # Computing inside an AI
 
 Since the launch of ChatGPT, there have been two explorations happening in parallel. 
