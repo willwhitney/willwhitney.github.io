@@ -5,12 +5,12 @@ title: About Me
 
 ![me in lab](assets/img/in_lab.jpg)
 
-I'm Will Whitney, a research scientist at DeepMind on the Control team. I got my PhD working with Kyunghyun Cho at NYU. Before that I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I also created [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which was downloaded >2,000,000 times.
+I'm Will Whitney, a research scientist at DeepMind. I got my PhD working with Kyunghyun Cho at NYU. Before that I worked with Josh Tenenbaum and Tejas Kulkarni at MIT for my Master's. In a past life I started a company and went through Y Combinator. I also created [Hydrogen](https://atom.io/packages/hydrogen), an interactive coding environment for the Atom text editor, which was downloaded >2,000,000 times.
 
 ## Research interests
-My research focuses on the problem of sample-efficient learning, mostly in the domain of robotics. What kinds of algorithms can take advantage of the structure of our 3D physical world to make learning more efficient, and how do they scale with additional data?
+Currently my research is about learning models of the physical world. I want to build generative models good enough to live inside of, whether for fun and games, to do [work](/computing-inside-ai.html), or to [train agents](/learned-simulators.html). This touches diffusion and video generation, 3D physics modeling, NeRF, and lots more.
 
-These days, this mostly takes the form of [learned simulation](/learned-simulators.html). It is much easier to encode structure into a dynamics model than a policy, and simulators unlock capabilities beyond policy training, such as policy evaluation and safety checks.
+I got into working on world models through robotics. Every problem in robotics that we can simulate sufficiently well is now relatively easy to solve. Every problem that we can't simulate is basically impossible and requires thousands of hours of human demonstrations to get results. To me, that implies that scaling simulation and making it cheap to author huge, near-perfect simulators of new scenes is plausibly the best way to make progress in robotics. This is especially true since progress on video generative models is so fast.
 
 
 ## Selected publications
