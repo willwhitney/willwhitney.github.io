@@ -4,8 +4,6 @@ subtitle: What would it mean to treat AI as a tool instead of a person?
 date: 2024-12-12
 ---
 
-# Computing inside an AI
-
 Since the launch of ChatGPT, there have been two explorations happening in parallel. 
 
 The first direction is about technical capabilities. How big a model can we train? How well can it answer SAT questions? How efficiently can we serve it?
