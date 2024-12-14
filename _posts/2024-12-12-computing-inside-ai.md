@@ -4,7 +4,7 @@ subtitle: What would it mean to treat AI as a tool instead of a person?
 date: 2024-12-12
 ---
 
-Since the launch of ChatGPT, exploration in two directions kicked into high gear. 
+Since the launch of ChatGPT, explorations in two directions kicked into high gear. 
 
 The first direction is about technical capabilities. How big a model can we train? How well can it answer SAT questions? How efficiently can we serve it?
 
@@ -62,6 +62,8 @@ Little pieces of this future already exist. Years ago Jonas Degrave showed that 
 There are huge open questions about what this will look like. Where will generative UI first be useful? How will we share and distribute the experiences that we make by collaborating with the model, if they only exist as a large model's context? Will we even want to? What new kinds of experiences will be possible? How will any of this actually work? Should models generate UI as code, or generate raw pixels directly?
 
 I don't know these answers yet. We'll have to experiment and find out!
+
+Discuss on [Bluesky](https://bsky.app/profile/wfwhitney.bsky.social/post/3lda3o567ok2r) or [Twitter](https://x.com/wfwhitney/status/1867740538876706910).
 
 > Thanks to [Michael Chang](https://x.com/mmmbchang?s=21&t=z068JnyK1Ebi5cT1b1tUEA) for discussions that inspired this whole line of thought. Thanks also to [Jonas Degrave](https://www.engraved.blog), [Cinjon Resnick](https://x.com/cinjoncin), and [Andrew Lampinen](https://lampinen.github.io) for feedback and discussion about earlier versions of this post.
 
